@@ -8,14 +8,16 @@ var currentColor;
 window.addEventListener('load', startUp);
 pallet.addEventListener('click', changeColor);
 canvas.addEventListener('click', paint);
+canvas.addEventListener('mousedown', startPaint);
+canvas.addEventListener('mouseup', stopPaint);
+
 
 
 function startUp() {
-  // debugger;
     currentColor = randomColor();
     currentColorShower.style.backgroundColor = currentColor;
     generateCanvas();
-    // console.log(currentColor);
+
 }
 
 function randomColor() {
@@ -48,10 +50,18 @@ function changeColor(event) {
     }
 }
 
-function paint(even) {
+function paint(event) {
     if (event.target.nodeName == 'TD') {
         let cell = event.target;
         cell.style.backgroundColor = currentColor;
     }
-    // console.log(event.target.nodeName);
+
+}
+
+function startPaint() {
+    canvas.addEventListener('mouseover', paint);
+}
+
+function stopPaint() {
+    canvas.removeEventListener('mouseover', paint)
 }
