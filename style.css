@@ -35,6 +35,8 @@ td {
 
 .colorPicker:hover {
     /*background-color: black;*/
+    height:65px;
+    width:65px;
     border-color: yellow;
     border-style: solid;
     border-width: 3px;
@@ -60,7 +62,7 @@ td {
 #currentColor {
     float: right;
     height: 44px;
-    width: 50px;
+    width: 15%;
     border-style: solid;
     border-color: black;
 }
@@ -98,6 +100,7 @@ td {
 }
 
 #white {
+  background-color: white;
     border-style: solid;
     border-width: 1px;
     border-color: black;
@@ -113,7 +116,7 @@ td {
     border-style: solid;
     border-width: 1px;
     border-color: black;
-    animation: colorchange 60s infinite;
+    animation: colorchange 10s infinite;
 }
 
 #mystery:hover {
@@ -123,10 +126,15 @@ td {
 }
 
 
-/*p{
-  position: relative;
-  left:45%;
-}*/
+p{
+  z-index: 3;
+  color: black;
+  /*float: right;*/
+  margin-left: auto;
+  margin-right: auto;
+  /*position: relative;*/
+  /*left:45%;*/
+}
 
 @keyframes colorchange {
     0% {

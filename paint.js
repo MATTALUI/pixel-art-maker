@@ -1,8 +1,5 @@
-// var pallet = document.getElementById('pallet');
-// var red = document.getElementById('red');
-// var blue = document.getElementById('blue');
 var currentColorShower = document.getElementById('currentColor');
-// var canvas = document.getElementById
+var cctext = document.getElementById('cctext');
 var currentColor;
 
 window.addEventListener('load', startUp);
@@ -37,16 +34,19 @@ function generateCanvas() {
 }
 
 function changeColor(event) {
-    // console.log(event.target.id);
     if (event.target.matches('.colorPicker')) {
         if (event.target.id == 'mystery') {
             currentColor = randomColor();
         } else {
             currentColor = event.target.id;
         }
-        // console.log(`Current Color: ${currentColor}`);
         currentColorShower.style.backgroundColor = currentColor;
-
+        if (currentColor == 'black'){
+          console.log();
+          cctext.style.color = 'white';
+        }else{
+          cctext.style.color = 'black';
+        }
     }
 }
 
