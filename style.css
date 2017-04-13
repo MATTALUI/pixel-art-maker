@@ -1,0 +1,135 @@
+body {
+    background-color: beige;
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+td{
+  height: 10px;
+  width: 10px;
+  margin: 0;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  background-color: white;
+}
+.colorPicker {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    float: left;
+}
+
+.colorPicker:hover {
+    /*background-color: black;*/
+    border-color: yellow;
+    border-style: solid;
+    border-width: 3px;
+}
+
+#eisle {
+    background-color: black;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    /*height: 50px;*/
+}
+
+#pallet {
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    height: 50px;
+    width: auto;
+}
+
+#currentColor {
+    float: right;
+    height: 44px;
+    width: 50px;
+    border-style: solid;
+    border-color: black;
+}
+
+#red {
+    background-color: red;
+}
+
+#blue {
+    background-color: blue;
+}
+
+#green {
+    background-color: green;
+}
+
+#orange {
+    background-color: orange;
+}
+
+#yellow {
+    background-color: yellow;
+}
+
+#purple {
+    background-color: purple;
+}
+
+#black {
+    background-color: black;
+}
+
+#gray {
+    background-color: gray;
+}
+
+#white {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+#white:hover {
+    border-color: yellow;
+    border-style: solid;
+    border-width: 3px;
+}
+
+#mystery {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    animation: colorchange 60s infinite;
+}
+
+#mystery:hover {
+    border-color: yellow;
+    border-style: solid;
+    border-width: 3px;
+}
+
+
+/*p{
+  position: relative;
+  left:45%;
+}*/
+
+@keyframes colorchange {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: orange;
+    }
+    50% {
+        background-color: yellow;
+    }
+    75% {
+        background-color: green;
+    }
+    100% {
+        background-color: blue;
+    }
+}
