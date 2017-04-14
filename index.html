@@ -10,10 +10,44 @@
 
 <body>
     <h1>Pixel Painter<span>By Matt</span></h1>
+
+    <div id="saver" class="modal">
+        <div>
+            <p>Save.</p>
+            <form>
+              <input id ="saveName" type="text" value="Name?"></input>
+            </form>
+            <button id="cancelSave">CANCEL</button>
+            <button id="saveIt">SAVE</button>
+        </div>
+    </div>
+
+
+    <div id="loader" class="modal">
+        <div>
+            <p>Which file?</p>
+            <div id="loadList">
+            </div>
+            <button id="cancelLoad">CANCEL</button>
+            <button id="loadIt">LOAD</button>
+        </div>
+    </div>
+
+
+
     <div id="easle">
         <table id="canvas">
 
         </table>
+    </div>
+    <div id="controlBar" style="display: none">
+        <button id="saverb">SAVE</button>
+        <button id="loaderb">LOAD</button>
+        <button id="startOver">NEW</button>
+        <button id="more">I WANT MORE CANVAS!</button>
+        <!-- <div id="saver" class="control"><p>SAVE</p></div>
+      <div id="loader" class="control"><p>LOAD</p></div>
+      <div id="startOver" class ="control"><p>START OVER</p></div> -->
     </div>
     <div id="pallet">
         <div id="red" class="colorPicker"> </div>
@@ -26,7 +60,13 @@
         <div id="gray" class="colorPicker"></div>
         <div id="white" class="colorPicker"></div>
         <div id="mystery" class="colorPicker"></div>
-        <div id="currentColor"><p id ="cctext">CURRENT COLOR</p></div>
+        <div id="currentColor">
+            <p id="cctext">CURRENT COLOR</p>
+        </div>
+        <div id="menu">
+            <p>MENU
+                <p>
+        </div>
     </div>
     <script rel="javascript" src="paint.js"></script>
 
