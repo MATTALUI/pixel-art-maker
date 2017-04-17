@@ -34,7 +34,9 @@ form{
 #controlBar>button:hover{
   background-color: yellow;
 }
-
+.selected{
+  background-color: yellow;
+}
 .colorPicker {
     height: 50px;
     width: 50px;

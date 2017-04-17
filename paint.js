@@ -7,11 +7,16 @@ window.addEventListener('load', startUp);
 
 
 function startUp() {
+  // test.addEventListener('click', reformat(localStorage.doNotErase))
+
+
+
     pallet.addEventListener('click', changeColor);
     canvas.addEventListener('click', paint);
     canvas.addEventListener('mousedown', startPaint);
     document.addEventListener('mouseup', stopPaint);
     menu.addEventListener('click', changeMenu);
+    loadList.addEventListener('click', loadListUpdate);
     saverb.addEventListener('click', ()=>{
       saver.style.display = 'block';
     });
@@ -21,6 +26,10 @@ function startUp() {
     cancelSave.addEventListener('click', () => {
         saver.style.display = 'none';
     })
+    loadIt.addEventListener('click',load)
+    document.getElementById('saveForm').onsubmit = ()=>{
+      console.log(document.getElementById('canvas').childNodes);
+      return false;};
     cancelLoad.addEventListener('click', clearLoadList);
     saveIt.addEventListener('click', save);
     currentColor = randomColor();
@@ -44,7 +53,9 @@ function generateCanvas() {
     for (let i = 0; i < 31; i++) {
         let rowToAdd = document.createElement('tr')
         for (let i = 0; i < 31; i++) {
-            rowToAdd.appendChild(document.createElement('td'));
+            let newCell = document.createElement('td');
+            newCell.style.backgroundColor = "white";
+            rowToAdd.appendChild(newCell);
         }
         canvas.appendChild(rowToAdd);
     }
@@ -93,20 +104,20 @@ function changeMenu() {
 
 function save() {
     saver.style.display = 'block';
-    let random = Math.random();
+    let currentPic = copyCanvas();
     if (saveName.value in localStorage){
       if(confirm('That save name already exists. Overwrite?')){
-        localStorage.setItem(saveName.value, random);
+        localStorage.setItem(saveName.value, currentPic);
       }
     }else{
-      localStorage.setItem(saveName.value, random);
+      localStorage.setItem(saveName.value, currentPic);
     }
-    console.log(localStorage);
+    // console.log(localStorage);
     saver.style.display = 'none';
 }
 
-
 function generateLoader() {
+  clearLoadList();
     loader.style.display = 'block';
     loadIt.style.display = "";
     if (localStorage.length === 0) {
@@ -124,7 +135,19 @@ function generateLoader() {
         }
     }
 
-    console.log(localStorage);
+    // console.log(localStorage);
+}
+
+function loadListUpdate(){
+  // console.log(event.target);
+  if (event.target.nodeName == 'P'){
+  // console.log(loadList.getElementsByTagName('p'));
+  for (let i = 0; i< loadList.getElementsByTagName('p').length; i++){
+    loadList.getElementsByTagName('p')[i].className= "";
+  }
+  event.target.className = "selected"
+  // console.log(localStorage[event.target.innerHTML]);
+  }
 }
 
 function newCanvas() {
@@ -153,4 +176,67 @@ function clearLoadList(){
   //   loadList.removeChild(loadList.getElementsByClassName('aSave')[i])
   //   console.log('a save');
   // }
+}
+
+function load(){
+  // console.log(loadList.getElementsByClassName("selected"));
+  if (loadList.getElementsByClassName("selected").length != 1){
+    alert('Please select a canvas to load.');
+    return;
+  }
+  let selected = loadList.getElementsByClassName("selected")[0].innerHTML;
+  pasteCanvas(reformat(localStorage[selected]));
+  clearLoadList();
+  loader.style.display = 'none';
+  // canvas.appendChild(localStorage[selected]);
+}
+
+function copyCanvas(){
+  let savedCanvas = [];
+  let rows = canvas.getElementsByTagName('tr');
+  for (let i = 0; i<rows.length;i++){
+    let currentRowStyle = [];
+    for (let j = 0; j< rows[i].getElementsByTagName('td').length; j++){
+      let currentCell = rows[i].getElementsByTagName('td')[j]
+      let currentColor = currentCell.style.backgroundColor;
+      currentRowStyle.push(currentColor)
+    }
+    savedCanvas.push(currentRowStyle);
+    }
+    return savedCanvas;
+  }
+
+function reformat(input){
+  saveFile = input.split(',');
+  let reformatted = [];
+  // console.log(saveFile);
+  while (saveFile.length > 0){
+    let lineStyle = [];
+    for (let i = 0; i < 31; i++){
+      lineStyle.push(saveFile[0]);
+      saveFile.shift()
+    }
+    reformatted.push(lineStyle)
+  }
+  return reformatted
+  // console.log(reformatted);
+}
+
+function pasteCanvas(canvas){
+  deleteCanvas()
+  // console.log(canvas.length);
+  for (let i = 0; i<canvas.length;i++){
+    // console.log('create a row');
+    let newRow = document.createElement('tr');
+    for (let j = 0; j < canvas[i].length;j++){
+      let newCell = document.createElement('td');
+      newCell.style.backgroundColor = canvas[i][j];
+      newRow.appendChild(newCell);
+    }
+    document.getElementById('canvas').appendChild(newRow);
+
+  }
+  // let canvasToPaste = reformat(canvasName)
+  // console.log('pasting a canvas');
+  // //paste canvasName tothe easle
 }
