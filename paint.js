@@ -26,7 +26,8 @@ function startUp() {
     cancelSave.addEventListener('click', () => {
         saver.style.display = 'none';
     })
-    loadIt.addEventListener('click',load)
+    deleter.addEventListener('click', deleteSave);
+    loadIt.addEventListener('click',load);
     document.getElementById('saveForm').onsubmit = ()=>{
       console.log(document.getElementById('canvas').childNodes);
       return false;};
@@ -70,7 +71,6 @@ function changeColor(event) {
         }
         currentColorShower.style.backgroundColor = currentColor;
         if (currentColor == 'black') {
-            console.log();
             cctext.style.color = 'white';
         } else {
             cctext.style.color = 'black';
@@ -112,7 +112,6 @@ function save() {
     }else{
       localStorage.setItem(saveName.value, currentPic);
     }
-    // console.log(localStorage);
     saver.style.display = 'none';
 }
 
@@ -134,19 +133,14 @@ function generateLoader() {
             loadList.appendChild(newItem);
         }
     }
-
-    // console.log(localStorage);
 }
 
 function loadListUpdate(){
-  // console.log(event.target);
   if (event.target.nodeName == 'P'){
-  // console.log(loadList.getElementsByTagName('p'));
   for (let i = 0; i< loadList.getElementsByTagName('p').length; i++){
-    loadList.getElementsByTagName('p')[i].className= "";
+    loadList.getElementsByTagName('p')[i].className= "aSave";
   }
   event.target.className = "selected"
-  // console.log(localStorage[event.target.innerHTML]);
   }
 }
 
@@ -165,21 +159,21 @@ function deleteCanvas() {
 }
 
 function clearLoadList(){
-  loader.style.display = 'none';
+  // debugger;
+  // loader.style.display = 'none';
+  if (loadList.getElementsByClassName('selected').length > 0){
+    for (let i =0; i< loadList.getElementsByClassName('selected').length; i++){
+      loadList.getElementsByClassName('selected')[i].className = 'aSave';
+    }
+  }
   while (loadList.getElementsByClassName('aSave').length>0){
     let current = document.getElementById('loadList').firstChild
-    // console.log(current);
     document.getElementById('loadList').removeChild(current);
   }
-  // let toRemove = loadList.getElementsByClassName('aSave').length;
-  // for (i=0; i< toRemove ;i++){
-  //   loadList.removeChild(loadList.getElementsByClassName('aSave')[i])
-  //   console.log('a save');
-  // }
+  loader.style.display = 'none';
 }
 
 function load(){
-  // console.log(loadList.getElementsByClassName("selected"));
   if (loadList.getElementsByClassName("selected").length != 1){
     alert('Please select a canvas to load.');
     return;
@@ -187,8 +181,7 @@ function load(){
   let selected = loadList.getElementsByClassName("selected")[0].innerHTML;
   pasteCanvas(reformat(localStorage[selected]));
   clearLoadList();
-  loader.style.display = 'none';
-  // canvas.appendChild(localStorage[selected]);
+  // loader.style.display = 'none';
 }
 
 function copyCanvas(){
@@ -209,7 +202,6 @@ function copyCanvas(){
 function reformat(input){
   saveFile = input.split(',');
   let reformatted = [];
-  // console.log(saveFile);
   while (saveFile.length > 0){
     let lineStyle = [];
     for (let i = 0; i < 31; i++){
@@ -219,14 +211,11 @@ function reformat(input){
     reformatted.push(lineStyle)
   }
   return reformatted
-  // console.log(reformatted);
 }
 
 function pasteCanvas(canvas){
   deleteCanvas()
-  // console.log(canvas.length);
   for (let i = 0; i<canvas.length;i++){
-    // console.log('create a row');
     let newRow = document.createElement('tr');
     for (let j = 0; j < canvas[i].length;j++){
       let newCell = document.createElement('td');
@@ -236,7 +225,11 @@ function pasteCanvas(canvas){
     document.getElementById('canvas').appendChild(newRow);
 
   }
-  // let canvasToPaste = reformat(canvasName)
-  // console.log('pasting a canvas');
-  // //paste canvasName tothe easle
+}
+
+function deleteSave(){
+  if (confirm(`Are you sure that you want to delete "${loadList.getElementsByClassName("selected")[0].innerHTML}"? Once you delete it, it cannot be recovered.`)){
+    localStorage.removeItem(loadList.getElementsByClassName("selected")[0].innerHTML);
+    clearLoadList();
+  }
 }
