@@ -119,10 +119,12 @@ function generateLoader() {
   clearLoadList();
     loader.style.display = 'block';
     loadIt.style.display = "";
+    deleter.style.display = "";
     if (localStorage.length === 0) {
         let thePs = loader.getElementsByTagName('div')[0].getElementsByTagName('p')
         thePs[0].innerHTML = 'You do not have any saved works of art!';
         loadIt.style.display = "none";
+        deleter.style.display ="none";
 
     } else {
         loader.getElementsByTagName('div')[0].getElementsByTagName('p')[0].innerHTML = 'Which file?';
@@ -228,6 +230,10 @@ function pasteCanvas(canvas){
 }
 
 function deleteSave(){
+  if (loadList.getElementsByClassName("selected").length != 1){
+    alert('Please select a saved canvas to delete.');
+    return;
+  }
   if (confirm(`Are you sure that you want to delete "${loadList.getElementsByClassName("selected")[0].innerHTML}"? Once you delete it, it cannot be recovered.`)){
     localStorage.removeItem(loadList.getElementsByClassName("selected")[0].innerHTML);
     clearLoadList();
